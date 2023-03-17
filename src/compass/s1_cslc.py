@@ -2,7 +2,7 @@
 
 '''driver for CSLC workflow in radar/geo'''
 
-from compass import s1_rdr2geo, s1_geo2rdr, s1_resample, s1_geocode_slc
+from compass import s1_rdr2geo, s1_geo2rdr, s1_resample, s1_geocode_slc, s1_geocode_slc_ramp
 from compass.utils.geo_runconfig import GeoRunConfig
 from compass.utils.runconfig import RunConfig
 from compass.utils.yaml_argparse import YamlArgparse
@@ -41,7 +41,10 @@ def run(run_config_path: str, grid_type: str):
 
         # run geocode_slc
         s1_geocode_slc.run(cfg)
-
+        
+        #cfg = GeoRunConfig.load_from_yaml(run_config_path, 's1_cslc_geo_ramp')
+        cfg = GeoRunConfig.load_from_yaml(run_config_path, 's1_cslc_geo')
+        s1_geocode_slc_ramp.run(cfg) 
 
 def main():
     parser = YamlArgparse(add_grid_type=True)
