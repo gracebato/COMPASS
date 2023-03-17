@@ -115,6 +115,7 @@ def run(cfg: GeoRunConfig):
         sliced_radar_grid = burst.as_isce3_radargrid()[b_bounds]
 
         output_hdf5 = out_paths.hdf5_path
+        output_hdf5 = output_hdf5.replace(".h5","_ramp.h5")
         root_path = '/science/SENTINEL1'
         with h5py.File(output_hdf5, 'w') as geo_burst_h5:
             geo_burst_h5.attrs['Conventions'] = "CF-1.8"
@@ -216,7 +217,7 @@ if __name__ == "__main__":
 
     # Get a runconfig dict from command line argumens
     cfg = GeoRunConfig.load_from_yaml(parser.run_config_path,
-                                      workflow_name='s1_cslc_geo_ramp')
+                                      workflow_name='s1_cslc_geo')
 
     # Run geocode burst workflow
     run(cfg)
